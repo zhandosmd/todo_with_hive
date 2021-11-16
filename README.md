@@ -1,6 +1,6 @@
 # todo_with_hive
 
-lazyload tutorials. will build demo app to practice hive.
+will build demo todo app to practice local database called hive.
 
 ## Getting Started
 
