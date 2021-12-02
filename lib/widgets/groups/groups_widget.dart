@@ -76,8 +76,7 @@ class _GroupListRowWidget extends StatelessWidget {
           // title: const Text('Some text'),
           title: Text(group.name),
           trailing: const Icon(Icons.chevron_right),
-          onTap: (){
-          },
+          onTap: ()=>model.showTasks(context, indexInList),
         ),
       ),
       endActionPane: ActionPane(
