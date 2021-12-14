@@ -1,30 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:todo_with_hive/widgets/task_form/task_form_widget_model.dart';
+import 'package:todo_with_hive/ui/widgets/task_form/task_form_widget_model.dart';
 
 class TaskFormWidget extends StatefulWidget {
-  const TaskFormWidget({Key? key}) : super(key: key);
+  final int groupKey;
+  const TaskFormWidget({Key? key, required this.groupKey}) : super(key: key);
 
   @override
   _TaskFormWidgetState createState() => _TaskFormWidgetState();
 }
 
 class _TaskFormWidgetState extends State<TaskFormWidget> {
-  TaskFormWidgetModel? _model;
+  late final TaskFormWidgetModel _model;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if(_model == null){
-      final groupKey = ModalRoute.of(context)!.settings.arguments as int;
-      _model = TaskFormWidgetModel(groupKey: groupKey);
-    }
+  void initState() {
+    super.initState();
+    _model = TaskFormWidgetModel(groupKey: widget.groupKey);
   }
 
   @override
   Widget build(BuildContext context) {
     return TaskFormWidgetModelProvider(
-      model: _model!,
+      model: _model,
       child: const _TextFormWidgetBody()
     );
   }

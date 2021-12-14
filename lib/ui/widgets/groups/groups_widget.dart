@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_with_hive/widgets/groups/groups_widget_model.dart';
+import 'package:todo_with_hive/ui/widgets/groups/groups_widget_model.dart';
 
 class GroupsWidget extends StatefulWidget {
   const GroupsWidget({Key? key}) : super(key: key);
@@ -11,12 +11,19 @@ class GroupsWidget extends StatefulWidget {
 
 class _GroupsWidgetState extends State<GroupsWidget> {
   final _model = GroupsWidgetModel();
+
   @override
   Widget build(BuildContext context) {
     return GroupsWidgetModelProvider(
       model: _model,
       child: const _GroupWidgetBody()
     );
+  }
+
+  @override
+  void dispose() async {
+    await _model.dispose();
+    super.dispose();
   }
 }
 
