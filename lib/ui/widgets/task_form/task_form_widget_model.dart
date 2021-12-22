@@ -5,14 +5,28 @@ import 'package:todo_with_hive/domain/data_provider/box_manager.dart';
 import 'package:todo_with_hive/domain/entity/group.dart';
 import 'package:todo_with_hive/domain/entity/task.dart';
 
-class TaskFormWidgetModel {
+class TaskFormWidgetModel extends ChangeNotifier{
   int groupKey;
-  var taskText = '';
+  var _taskText = '';
+
+  bool get isValid => _taskText.trim().isNotEmpty;
+
+  set taskText(String value){
+    final isTaskTextEmpty = _taskText.trim().isEmpty;
+    _taskText = value;
+    if(value.trim().isEmpty != isTaskTextEmpty){
+      notifyListeners();
+    }
+  }
 
   TaskFormWidgetModel({required this.groupKey});
 
   void saveTask(BuildContext context) async{
-    if(taskText.isEmpty) return;
+    final taskText = _taskText.trim();
+
+    if(taskText.isEmpty){
+      return;
+    }
 
     final task = Task(text: taskText, isDone: false);
     final box = await BoxManager.instance.openTaskBox(groupKey);
@@ -22,14 +36,14 @@ class TaskFormWidgetModel {
   }
 }
 
-class TaskFormWidgetModelProvider extends InheritedWidget {
+class TaskFormWidgetModelProvider extends InheritedNotifier{
   final TaskFormWidgetModel model;
 
   const TaskFormWidgetModelProvider({
     Key? key,
     required Widget child,
     required this.model,
-  }) : super(key: key, child: child);
+  }) : super(key: key, notifier: model,child: child);
 
   static TaskFormWidgetModelProvider? watch(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<TaskFormWidgetModelProvider>();
