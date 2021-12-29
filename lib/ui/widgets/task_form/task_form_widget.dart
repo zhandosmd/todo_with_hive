@@ -68,9 +68,7 @@ class _TaskTextWidget extends StatelessWidget {
       expands: true,
       decoration: const InputDecoration(
         border: InputBorder.none,
-        hintText: 'Текст задачиы',
-        errorText: 'sad'
-
+        hintText: 'Текст задачы',
       ),
       onChanged: (value) => model?.taskText = value,
       onEditingComplete: () => model?.saveTask(context),
